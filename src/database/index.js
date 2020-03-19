@@ -21,14 +21,17 @@ class Database {
   }
 
   mongo() {
-    this.mongoConnection = mongoose.connect(
-      'mongodb+srv://danieljudo:danieljudo@cluster0-g6fdk.mongodb.net/gobarber?retryWrites=true&w=majority',
-      {
+    const uri =
+      'mongodb+srv://danieljudo:danieljudo@cluster0-g6fdk.mongodb.net/' +
+      'gobarber?retryWrites=true&w=majority';
+    // Prints "MongoError: bad auth Authentication failed."
+    this.mongoConnection = mongoose
+      .connect(uri, {
         useNewUrlParser: true,
-        useFindAndModify: true,
         useUnifiedTopology: true,
-      }
-    );
+        serverSelectionTimeoutMS: 5000,
+      })
+      .catch(err => console.log(err.reason));
   }
 }
 

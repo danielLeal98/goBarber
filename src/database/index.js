@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Sequelize from 'sequelize';
 import mongoose from 'mongoose';
 import databaseConfig from '../config/database';
@@ -21,12 +22,8 @@ class Database {
   }
 
   mongo() {
-    const uri =
-      'mongodb+srv://danieljudo:danieljudo@cluster0-g6fdk.mongodb.net/' +
-      'gobarber?retryWrites=true&w=majority';
-    // Prints "MongoError: bad auth Authentication failed."
     this.mongoConnection = mongoose
-      .connect(uri, {
+      .connect(process.env.MONGO_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         serverSelectionTimeoutMS: 5000,
